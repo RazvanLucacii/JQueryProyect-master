@@ -27,21 +27,8 @@
     </nav>
     <hr>
     <div class="container">
-        <table id="tablahospitales" class="text-center table table-success table-striped-columns">
-            <thead>
-                <tr>
-                    <th>IdHospital</th>
-                    <th>Nombre</th>
-                    <th>Direccion</th>
-                    <th>Telefono</th>
-                    <th>Camas</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <h1>Detalles del Hospital</h1>
+        <ul id="detalleshospitales"></ul>
     </div>
     <footer>
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
@@ -59,27 +46,16 @@
                 $.getJSON(urlHospitales + requestHospital, function (data) {
                     var html = "";
                     $.each(data, function (index, hospital) { 
-                        html += "<tr>";
-                        html += "<td>" + hospital.idhospital + "</td>";
-                        html += "<td>" + hospital.nombre + "</td>";
-                        html += "<td>" + hospital.direccion + "</td>";
-                        html += "<td>" + hospital.telefono + "</td>";
-                        html += "<td>" + hospital.camas + "</td>";
-                        html += "<td><a href='detalleshospitales.html' class='btn btn-success'>Detalles</a></td>";
-                        html += "<td><a href='editarhospitales.html' class='btn btn-primary'>Modificar</a></td>";
-                        html += "<td><a href='#' class='botoneliminar btn btn-danger'>Eliminar</a></td>";
-                        html += "</tr>";  
+                        html += "<li>" + hospital.idhospital + "</li>";
+                        html += "<li>" + hospital.nombre + "</li>";
+                        html += "<li>" + hospital.direccion + "</li>";
+                        html += "<li>" + hospital.telefono + "</li>";
+                        html += "<li>" + hospital.camas + "</li>";
                     });
-                    $("#tablahospitales tbody").html(html);
+                    $("#detalleshospitales").html(html);
                 });
             }
-            $(".botoneliminar").click(function () { 
-                alert("eliminado");
-                
-
-            });
-
-        });
+        })
     </script>
 </body>
 </html>
