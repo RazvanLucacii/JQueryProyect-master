@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Comentarios con: <<Control + k + c>> -->
+    <!-- Descomentar con: <<Control + k + u>> -->
+    <script src="JS/jquery-3.7.1.min.js"></script>
+    <style>
+        .azul{
+           color: blue; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Selectores Jquery</h1>
+    <button id="boton1">Pulsar para algo...</button>
+    <h1 class="azul">Soy azul</h1>
+    <button class="azul">Soy un boton azul</button>
+    <p>Aprendiendo Jquery 1</p>
+    <p>Aprendiendo Jquery 2</p>
+    <p>Aprendiendo Jquery 3</p>
+    
+    <script>
+        //La primera instruccion que debemos incluir
+        //es cargar los componentes al iniciar la pagina
+        $(document).ready(function(){
+            //alert("Funcionando");
+            //podemos realizar acciones
+            //ocultar algun elemento
+            $("h1").hide();
+            $("#boton1").hide();
+            //podemos asociar eventos
+            $("p").click(function() {
+                //imprescindible para el desarrollo front
+                //visualizar acciones en el explorador web
+                console.log("Mostrar mensajes en web...");
+                $("h1").show();
+                //tenemos una palabra clave llamada this
+                //dicha palabra accede al objeto 
+                //que ha realizado la llamada
+                //$("h1").hide();
+                $(this).hide();
+            })
+
+
+        })
+    </script>
+</body>
+</html>

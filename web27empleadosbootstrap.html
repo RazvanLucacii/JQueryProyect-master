@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CSS/bootstrap.css">
+    <link rel="stylesheet" href="CSS/alertchulo2.css">
+</head>
+<body>
+    <h1>Select oficios empleados</h1>
+    <select id="selectoficios"></select>
+    <br><br>
+    <label>Incremento salarial: </label>
+    <input type="text" id="cajaincremento">
+    <button id="botonincremento" class="btn btn-danger">Incrementar salarios</button>
+    <hr>
+    <table id="datosempleados" class="table table-sm">
+        <thead>
+            <tr class="table-warning">
+                <th>Apellidos</th>
+                <th>Oficios</th>
+                <th>Salarios</th>
+                <th>Directores</th>
+            </tr>
+        </thead>
+        <tbody class="table-dark"></tbody>
+    </table>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+    <script src="JS/bootstrap.bundle.js"></script>
+    <script src="JS/jsalertchulo2.js"></script>
+    <script>
+        var urlOficios = "https://apiempleadosaction.azurewebsites.net/";
+        $(document).ready(function () {
+            var requestOficios = "api/Empleados/GetOficios/oficios"
+            $.getJSON(urlOficios + requestOficios, function (data) {
+                $.each(data, function(index, oficio){
+                    var option = $("<option>", { "text": oficio, "value": oficio});
+                    $("#selectoficios").append(option);
+                })
+                
+            });
+            $("#selectoficios").change(function () { 
+                var oficio = $(this).val();
+                GetEmpleadosOficio(oficio);
+
+            });
+
+            function GetEmpleadosOficio(oficio){
+                var requestEmpleados = "/api/Empleados/GetEmpleadosOficio/empleadosoficio/" + oficio;
+                $.getJSON(urlOficios + requestEmpleados, function (data) {
+                    var html = "";
+                    $.each(data, function (index, oficios) { 
+                        html += "<tr>";
+                        html += "<td>" + oficios.apellido + "</td>";
+                        html += "<td>" + oficios.oficio + "</td>";
+                        html += "<td>" + oficios.salario + "</td>";
+                        html += "<td>" + oficios.director + "</td>";
+                        html += "</tr>";
+                    });
+                    $("#datosempleados tbody").html(html);
+                });
+            }
+            $("#botonincremento").click(function () { 
+                var oficioemple = $("#selectoficios").val();
+                var incremento = parseInt($("#cajaincremento").val());
+                var request = "api/empleados/incrementarsalariooficios/"
+                + oficioemple + "/" + incremento;
+                Swal.fire({
+                    title: '¿Seguro que quieres incrementar?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Incrementar',
+                    denyButtonText: `No`,
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire('Se ha incrementado sadisfactoriamente.');
+                        $.ajax({
+                            type: "PUT",
+                            url: urlOficios + request,
+                            success: function () {
+                                GetEmpleadosOficio(oficioemple);
+                            },
+                            error: function(){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Something went wrong!',
+                                    footer: '<a href="">Why do I have this issue?</a>'
+                                })
+                            }
+                        });
+                    } else if (result.isDenied) {
+                        Swal.fire('No se ha incrementado el salario.')
+                    }
+                    })
+                
+            });
+        });
+    </script>
+</body>
+</html>

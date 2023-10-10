@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1>Lectura documento JSON Simple</h1>
+    <button id="botonleer">Leer JSON Simple</button>
+    <ul id="tareas"></ul>
+    <script>
+        $(document).ready(function () {
+            $("#botonleer").click(function () { 
+                $.getJSON("documents/JSON/tareas.json", function(data){
+                    //key y value son los valores de cada clave/valor
+                    //del documento
+                    console.log("Leyendo...");
+                    var html = "";
+                    $.each(data, function(key, value){
+                        html += "<li>Key: " + key
+                        + ", Value: " + value + "</li>";
+                    })
+                    $("#tareas").html(html);
+                })
+                
+            });
+        });
+    </script>
+</body>
+</html>

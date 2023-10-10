@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1>Notas Alumnos XML</h1>
+    <label>Nota:</label>
+    <input type="text" id="cajanota">
+    <button id="botonbuscarnota">Mostrar Notas</button>
+    <hr>
+    <ul id="listanotas"></ul>
+
+    <script>
+        $(document).ready(function () {
+            $("#botonbuscarnota").click(function () { 
+                var notas = parseInt($("#cajanota").val());
+                var html = "";
+                $.get("documents/XML/alumnos.xml", function (data) {
+                    console.log("LEyendo...");
+                    $(data).find("alumno").each(function(){
+                        var nombrealum = $(this).find("nombre").text();
+                        var apellidoalum = $(this).find("apellidos").text();
+                        var notaalum = $(this).find("nota").text();
+                        if(notas <= notaalum){
+                            html += "<li>" + nombrealum + ", " + apellidoalum + ", " + notaalum + "</li>";
+                            $("#listanotas").html(html); 
+                        }
+                    })
+                })
+                
+            });
+        });
+    </script>
+</body>
+</html>

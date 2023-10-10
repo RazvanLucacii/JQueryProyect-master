@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1>Datos Cliente XML</h1>
+    <div id="clientes"></div>
+    <h3 id="datoscliente"></h3>
+
+    <script>
+        $(document).ready(function () {
+            $.get("documents/XML/clientes.xml", function(data){
+                console.log("Leyendo...");
+                $(data).find("CLIENTE").each(function(){
+                    var nombre = $(this).find("NOMBRE").text();
+                    var idcliente = $(this).attr("IDCLIENTE");
+                    var botones = $("<button>",{
+                        "text": nombre, "value": idcliente
+                    })
+                    $("#clientes").append(botones);
+                    botones.click(function () { 
+                        var idcliente = $(this).val();
+                        console.log("Leyendo boton");
+                        var filtro = "CLIENTE[IDCLIENTE=" + idcliente +"]";
+                        var nodocliente = $(data).find(filtro).first();
+                        var nombrecli = $(nodocliente).find("NOMBRE").text();
+                        var direccioncli = $(nodocliente).find("DIRECCION").text();
+                        var emailcli = $(nodocliente).find("EMAIL").text();
+                        var codigopostal = $(nodocliente).find("CODIGOPOSTAL").text();
+
+                        $("#datoscliente").html(nombrecli + " - " + direccioncli + " - " + emailcli + " - " + codigopostal);
+                    })
+                });
+            })
+        });
+    </script>
+</body>
+</html>

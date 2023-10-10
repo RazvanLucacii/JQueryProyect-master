@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1>Generar Checkbox</h1>
+    <input type="range" id="rango" min="1" value="1" max="20">
+    <span id="valorid"></span>
+    <div id="contenedor"></div>
+    <h2 id="final">0</h2>
+    <script>
+        $(document).ready(function () {
+            $("#rango").change(function () { 
+                var valorid = parseInt($(this).val());
+                $("#valorid").text(valorid);
+                $("#contenedor").text("");
+                for (var i = 1; i < valorid; i++) {
+                    var box = parseInt((Math.random()*100) + 1);
+                    var checkboxes = $("<input>", {"type": "checkbox", "text": box });
+                    var label = $("<label>", {
+                        "text": box
+                    })
+                    $("#contenedor").append(checkboxes);
+                    checkboxes.click(function() {
+                        var resultado = parseInt($("#final").text());
+                        var valor = parseInt($(this).text());
+
+                        if ($(this).prop("checked") == true){
+                            resultado += valor
+                        }else{
+                            resultado -= valor
+                        }
+                        $("#final").text(resultado);
+                    })
+                }
+            });
+        });
+    </script>
+</body>
+</html>

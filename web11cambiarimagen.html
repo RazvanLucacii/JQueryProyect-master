@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+    <style>
+        img{
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cambia Imagenes</h1>
+    <input type="range" id="rango" min="1" value="1" max="10">
+    <div id="contenedor"></div>
+    <hr>
+    <div id="contenedorbtn"></div>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#rango").change(function () {
+                var botones = parseInt($(this).val());
+                $("#contenedor").text("");
+                $("#contenedorbtn").text("");
+                for (var i = 1; i < botones; i++){
+                    var boton = $("<button>", {
+                        "text": "Imagen" + i,
+                        "data-imagen": i
+                    });
+
+                    var imagen = $("<img>", {
+                        "src": "IMG/img1.jpg",
+                        "id": "imagen" + i
+                    });
+
+                    $("#contenedorbtn").append(boton);
+                    $("#contenedor").append(imagen);
+                 
+                    boton.click(function () {
+                        var id = $(this).data("imagen");
+                        $("#imagen" + id).attr("src", "IMG/img2.png");
+                    });
+                }
+                 
+                
+            })
+        });
+    </script>
+</body>
+</html>

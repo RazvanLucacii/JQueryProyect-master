@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+    <style>
+        img{
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <img src="IMG/img1.jpg"/>
+    <img src="IMG/img1.jpg"/>
+    <img src="IMG/img1.jpg"/>
+    <img src="IMG/img1.jpg"/>
+   <script>
+    $(document).ready(function(){
+        $("img").mouseover(function(){
+            $(this).attr("src", "IMG/img2.png");
+        })
+        $("img").mouseout(function(){
+            $(this).attr("src", "IMG/img1.jpg");
+        })
+        $("img").click(function() {
+            var imagen = $(this).attr("src");
+            console.log("Pulsando sobre: " + imagen);
+            if (imagen == "IMG/img1.jpg"){
+                console.log("Soy la imagen 1");
+            }else{
+                console.log("Alegrame el día...");
+            }
+        })
+    })
+   </script>
+</body>
+</html>

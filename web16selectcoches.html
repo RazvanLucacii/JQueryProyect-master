@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1>Selector Coches XML</h1>
+    <select id="categoria"></select>
+    <button id="mostrarcoches">Mostrar Datos</button>
+    <h1 id="datoscoche"></h1>
+    <img id="imagencoche" style="width:150px; height: 150px;">
+
+    <script>
+        $(document).ready(function () {
+            $.get("documents/XML/coches.xml", function(data){
+                console.log("Leyendo...");
+                $(data).find("coche").each(function(){
+                    var marca = $(this).find("marca").text();
+                    var idcoche = $(this).attr("idcoche");
+                    var option = $("<option>", {
+                        "text": marca, "value": idcoche,
+                    });
+                    $("#categoria").append(option);
+                })
+                    
+            });
+            $("#mostrarcoches").click(function () { 
+                var idcoche = $("#categoria").val();
+                $.get("documents/XML/coches.xml", function(data){
+                    console.log("Leyendo...");
+                    //coche[idcoche=1]
+                    var filtro = "coche[idcoche=" + idcoche +"]";
+                    var nodocoche = $(data).find(filtro).first();
+                    var marca = $(nodocoche).find("marca").text();
+                    var modelo = $(nodocoche).find("modelo").text();
+                    var imagen = $(nodocoche).find("imagen").text();
+                    $("#datoscoche").text(marca + ", " + modelo);
+                    $("#imagencoche").attr("src", imagen);
+                })
+            });
+        });
+    </script>
+</body>
+</html>

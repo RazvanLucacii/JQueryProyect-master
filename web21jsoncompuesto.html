@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1>Lectura documento JSON Compuesto</h1>
+    <button id="botonclientes">Cargar Clientes</button>
+    <div id="capaclientes"></div>
+    <script>
+        $(document).ready(function () {
+            $("#botonclientes").click(function () { 
+                $.ajax({
+                    "url": "documents/JSON/clientes.json",
+                    "method": "GET",
+                    "dataType": "json",
+                    success: function(data){
+                        console.log("Leyendo servicio");
+                        $.each(data.clientes, function(index, cliente){
+                            //propiedades son dinamicas
+                            var nombre = cliente.nombre;
+                            html += "<h1>" + nombre + "</h1>";
+                        })
+                        $("#capaclientes").html(html);
+                    },
+                    error: function(error){
+                        console.log("Error en la lectura del servicio");
+                    }
+                })
+                
+            });
+        });
+    </script>
+</body>
+</html>
