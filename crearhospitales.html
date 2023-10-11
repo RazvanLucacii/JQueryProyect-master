@@ -29,22 +29,26 @@
     <div class="container">
         <h1>Nuevo Hospital</h1>
         <div id="nombre" class="mb-3">
+            <label class="form-label">ID</label><br>
+            <input type="text" class="form-control" placeholder="Nombre del Hospital" id="cajaid">
+        </div>
+        <div id="nombre" class="mb-3">
             <label class="form-label">Nombre</label><br>
-            <input type="text" class="form-control" placeholder="Nombre del Hospital">
+            <input type="text" class="form-control" placeholder="Nombre del Hospital" id="cajanombre">
         </div>
         <div id="direccion" class="mb-3">
             <label class="form-label">Direccion</label><br>
-            <input type="text" class="form-control" placeholder="Direccion del Hospital">
+            <input type="text" class="form-control" placeholder="Direccion del Hospital" id="cajadireccion">
         </div>
         <div id="telefono" class="mb-3">
             <label class="form-label">Telefono</label><br>
-            <input type="text" class="form-control" placeholder="Telefono del Hospital">
+            <input type="text" class="form-control" placeholder="Telefono del Hospital" id="cajatelefono">
         </div>
         <div id="camas" class="mb-3">
             <label class="form-label">Camas</label><br>
-            <input type="text" class="form-control" placeholder="Numero de camas del Hospital">
+            <input type="text" class="form-control" placeholder="Numero de camas del Hospital" id="cajacama">
         </div><br>
-        <button type="button" class="btn btn-primary">Crear Hospital</button>
+        <button type="button" class="btn btn-primary" id="botoninsert">Crear Hospital</button>
     </div><br>
     <footer>
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
@@ -54,7 +58,34 @@
     <script src="JS/jquery-3.7.1.min.js"></script>
     <script src="JS/bootstrap.bundle.js"></script>
     <script>
-        
+        var urlHospitales = "https://apicrudhospital.azurewebsites.net/";
+        $(document).ready(function () {
+            $("#botoninsert").click(function () { 
+                var requestInsert = "webresources/hospitales/post";
+                var idhospital = parseInt($("#cajaid").val());
+                var nombre = ($("#cajanombre").val());
+                var direccion = ($("#cajadireccion").val());
+                var telefono = ($("#cajatelefono").val());
+                var camas = parseInt($("#cajacama").val());
+                var hospital = new Object();
+                hospital.idhospital = idhospital;
+                hospital.nombre = nombre;
+                hospital.direccion = direccion;
+                hospital.telefono = telefono;
+                hospital.camas = camas;
+                var hospitalJson = JSON.stringify(hospital);
+                $.ajax({
+                    "url": urlHospitales + requestInsert,
+                    "type": "POST", 
+                    "contentType": "application/json", 
+                    "data": hospitalJson, 
+                    success: function() {
+                        console.log("Insertado");
+                        window.location.href = "principalhospitales.html"; 
+                    }
+                })
+            })
+        })
     </script>
 </body>
 </html>

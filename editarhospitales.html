@@ -30,21 +30,21 @@
         <h1>Editar Hospital</h1>
         <div id="nombre" class="mb-3">
             <label class="form-label">Nombre</label><br>
-            <input type="text" class="form-control" placeholder="Nombre del Hospital">
+            <input type="text" class="form-control" placeholder="Nombre del Hospital" id="cajanombre">
         </div>
         <div id="direccion" class="mb-3">
             <label class="form-label">Direccion</label><br>
-            <input type="text" class="form-control" placeholder="Direccion del Hospital">
+            <input type="text" class="form-control" placeholder="Direccion del Hospital" id="cajadireccion">
         </div>
         <div id="telefono" class="mb-3">
             <label class="form-label">Telefono</label><br>
-            <input type="text" class="form-control" placeholder="Telefono del Hospital">
+            <input type="text" class="form-control" placeholder="Telefono del Hospital" id="cajatelefono">
         </div>
         <div id="camas" class="mb-3">
             <label class="form-label">Camas</label><br>
-            <input type="text" class="form-control" placeholder="Numero de camas del Hospital">
+            <input type="text" class="form-control" placeholder="Numero de camas del Hospital" id="cajacama">
         </div><br>
-        <button type="button" class="btn btn-primary">Insertar Hospital</button>
+        <button type="button" class="btn btn-primary" id="botoneditar">Editar Hospital</button>
     </div>
     <footer>
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
@@ -53,5 +53,48 @@
     </footer>
     <script src="JS/jquery-3.7.1.min.js"></script>
     <script src="JS/bootstrap.bundle.js"></script>
+    <script>
+        var urlHospitales = "https://apicrudhospital.azurewebsites.net/";
+        $(document).ready(function () {
+            var params = new window.URLSearchParams(window.location.search);
+            var idhospitalUrl = params.get("idhospital");
+            var requestFind = "webresources/hospitales/" + idhospitalUrl;
+            $.ajax({
+                type: "GET",
+                url: urlHospitales + requestFind,
+                success: function (response) {
+                    $("#cajaid").val(data.idhospital);
+                    $("#cajanombre").val(data.nombre);
+                    $("#cajadireccion").val(data.direccion);
+                    $("#cajatelefono").val(data.telefono);
+                    $("#cajacama").val(data.camas);
+                }
+            });
+            $("#botoneditar").click(function () { 
+                var requestput = "webresources/hospitales/put";
+                var idhospital = parseInt($("#cajaid").val());
+                var nombre = ($("#cajanombre").val());
+                var direccion = ($("#cajadireccion").val());
+                var telefono = ($("#cajatelefono").val());
+                var camas = parseInt($("#cajacama").val());
+                hospital.idhospital = idhospital;
+                hospital.nombre = nombre;
+                hospital.direccion = direccion;
+                hospital.telefono = telefono;
+                hospital.camas = camas;
+                var hospitalJSON = JSON.stringify(hospital);
+                $.ajax({
+                    type: "PUT",
+                    url: urlHospitales + requestput,
+                    data: hospitalJSON,
+                    contentType: "application/json",
+                    success: function () {
+                        console.log("Editado");
+                        window.location.href = "principalhospitales.html";
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
