@@ -36,20 +36,48 @@
     </nav>
     <hr/>
     <div class='container text-center'>
-        <form>
-          <div>
-            <h2 id="#cajanombre"></h2>
+        <form id="detalleequipos">
+            <h2 id="cajanombre"></h2>
             <img src="" id="#cajaimagen" style="width: 200px" />
-            <h3 id="#cajachampions"></h3>
-            <p id="#cajadescripcion"></p>
-            <div>
-              <a class="btn btn-success" href="jugadores.html">Jugadores</a>
-              <a class="btn btn-primary" href="homeEquipos.html">Volver</a>
-            </div>
-          </div>
+            <h3 id="cajachampions"></h3>
+            <p id="cajadescripcion"></p>
         </form>
+        <div>
+          <a class="btn btn-success" href="jugadores.html">Jugadores</a>
+          <a class="btn btn-primary" href="homeEquipos.html">Volver</a>
+        </div>
     </div>
     <script src="JS/jquery-3.7.1.min.js"></script>
     <script src="JS/bootstrap.bundle.js"></script>
+    <script>
+        var urls = "https://apiapuestas.azurewebsites.net/";
+        $(document).ready(function () {
+            getEquipos();
+            function getJsonApuestas(nombre, imagen, champions, descripcion){
+                var equipo = new Object();
+                equipo.nombre = nombre;
+                equipo.imagen = imagen;
+                equipo.champions = champions;
+                equipo.descripcion = descripcion;
+                var dataJson = JSON.stringify(equipo);
+                return dataJson;
+            }
+
+            function getEquipos(){
+                var request = "api/equipos/";
+                $.getJSON(urls + request, function (data) {
+                    var html = "";
+                    $.each(data, function (index, equipo) { 
+                        html += "<h2>" + equipo.nombre + "</h2>";
+                        html += "<img src=" +  equipo.imagen + " style='width:200px '/>";
+                        html += "<h3>"+ "Champions: " + equipo.champions + "</h3>";
+                        html += "<p>" + equipo.descripcion + "</p>";
+                    });
+                    $("#detalleequipos").html(html);
+                });
+            }
+        })
+            
+    </script>
 </body>
 </html>

@@ -75,10 +75,10 @@
                 hospital.camas = camas;
                 var hospitalJson = JSON.stringify(hospital);
                 $.ajax({
-                    "url": urlHospitales + requestInsert,
-                    "type": "POST", 
-                    "contentType": "application/json", 
-                    "data": hospitalJson, 
+                    url: urlHospitales + requestInsert,
+                    type: "POST", 
+                    contentType: "application/json", 
+                    data: hospitalJson, 
                     success: function() {
                         console.log("Insertado");
                         window.location.href = "principalhospitales.html"; 

@@ -49,5 +49,34 @@
     </div>
     <script src="JS/jquery-3.7.1.min.js"></script>
     <script src="JS/bootstrap.bundle.js"></script>
+    <script>
+        var urls = "https://apiapuestas.azurewebsites.net/";
+        $(document).ready(function () {
+            getEquipos();
+
+            function getJsonApuestas(nombre, imagen){
+                var equipo = new Object();
+                equipo.nombre = nombre;
+                equipo.imagen = imagen;
+                var dataJson = JSON.stringify(equipo);
+                return dataJson;
+            }
+        })
+            
+        function getEquipos(){
+            var request = "api/equipos";
+            $.getJSON(urls + request, function (data) {
+                var html = "";
+                $.each(data, function (index, equipo) { 
+                    html += "<tr>";
+                    html += "<td>" + equipo.nombre + "</td>";
+                    html += "<td><img src=" +  equipo.imagen + " style='width:200px '/></td>";
+                    html += "<td><a href='detalleEquipos.html' class='btn btn-success'>Detalles</a></td>";
+                    html += "</tr>"
+                });
+            $("#tablaequipos").html(html);
+            });
+        }
+    </script>
 </body>
 </html>

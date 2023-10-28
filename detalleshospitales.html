@@ -41,21 +41,22 @@
         var urlHospitales = "https://apicrudhospital.azurewebsites.net/";
         $(document).ready(function () {
             GetHospitales();
-            function GetHospitales(){
-                var requestHospital = "webresources/hospitales";
-                $.getJSON(urlHospitales + requestHospital, function (data) {
-                    var html = "";
-                    $.each(data, function (index, hospital) { 
-                        html += "<li>" + hospital.idhospital + "</li>";
-                        html += "<li>" + hospital.nombre + "</li>";
-                        html += "<li>" + hospital.direccion + "</li>";
-                        html += "<li>" + hospital.telefono + "</li>";
-                        html += "<li>" + hospital.camas + "</li>";
-                    });
-                    $("#detalleshospitales").html(html);
-                });
-            }
         })
+            
+        function GetHospitales(){
+            var requestHospital = "webresources/hospitales";
+            $.getJSON(urlHospitales + requestHospital, function (data) {
+                var html = "";
+                $.each(data, function (index, hospital) { 
+                    html += "<li>" + hospital.idhospital + "</li>";
+                    html += "<li>" + hospital.nombre + "</li>";
+                    html += "<li>" + hospital.direccion + "</li>";
+                    html += "<li>" + hospital.telefono + "</li>";
+                    html += "<li>" + hospital.camas + "</li>";
+                });
+            $("#detalleshospitales").html(html);
+            });
+        }
     </script>
 </body>
 </html>
