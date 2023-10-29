@@ -70,6 +70,7 @@
             $.getJSON(urls + request, function (data) {
                 var html = "";
                 $.each(data, function (index, jugador) { 
+                
                     html += "<tr>";
                     html += "<td>" + jugador.nombre + "</td>";
                     html += "<td><img src=" + jugador.imagen + " style='width:200px '/></td>";

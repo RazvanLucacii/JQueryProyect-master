@@ -36,8 +36,7 @@
     </nav>
     <hr/>
     <div class='container text-center'>
-        <form>
-          <div>
+        <form id="detallejugador">
             <h2 id="#cajanombre"></h2>
             <img src="" id="#cajaimagen" style="width: 200px" />
             <h3 id="#cajaposicion"></h3>
@@ -46,10 +45,41 @@
             <div>
               <a class="btn btn-success" href="jugadores.html">Jugadores</a>
             </div>
-          </div>
         </form>
     </div>
     <script src="JS/jquery-3.7.1.min.js"></script>
     <script src="JS/bootstrap.bundle.js"></script>
+    <script>
+        var urls = "https://apiapuestas.azurewebsites.net/";
+        $(document).ready(function () {
+            getJugador();
+            function getJsonJugador(idJugador, nombre, imagen, posicion, fechaNacimiento, pais){
+                var jugador = new Object();
+                jugador.nombre = nombre;
+                jugador.imagen = imagen;
+                jugador.posicion = posicion;
+                jugador.fechaNacimiento = fechaNacimiento;
+                jugador.pais = pais;
+                jugador.idJugador = idJugador;
+                var dataJson = JSON.stringify(jugador);
+                return dataJson;
+            }
+
+            function getJugador(){
+                var request = "api/jugadores/";
+                $.getJSON(urls + request, function (data) {
+                    var html = "";
+                    $.each(data, function (index, jugador) { 
+                        html += "<h2>" + jugador.nombre + "</h2>";
+                        html += "<img src=" +  jugador.imagen + " style='width:200px '/>";
+                        html += "<h3>"+ jugador.posicion + "</h3>";
+                        html += "<p>" + "Fecha Nacimiento: " + jugador.fechaNacimiento + "</p>";
+                        html += "<p>" + "Pais: " + jugador.pais + "</p>";
+                    });
+                    $("#detallejugador").html(html);
+                });
+            }
+        })
+    </script>
 </body>
 </html>
